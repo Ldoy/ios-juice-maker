@@ -7,24 +7,25 @@
 import Foundation
 
 class FruitStore {
-	private var name: String
-	private var count = 10
+	enum FruitList: String {
+		   case strawberry = "딸기"
+		   case banana = "바나나"
+		   case kiwi = "키위"
+		   case mango = "망고"
+		   case pineapple = "파인애플"
+	   }
 	
-	var status: (name: String, count: Int) {
-		get {
-			return (name, count)
+	var currentFruit = 10
+
+	func setCount(count: Int) {
+		var currentCount: Int {
+			get {
+				currentFruit += count
+				return currentFruit
+			}
+			set {
+				currentFruit = newValue
+			}
 		}
 	}
-	
-	init(fruitName name: String) {
-		self.name = name
-	}
-    
-    func setCount(amount number: Int){
-        count += number
-        
-        if count < 0 {
-            count = 0
-        }
-    }
 }
