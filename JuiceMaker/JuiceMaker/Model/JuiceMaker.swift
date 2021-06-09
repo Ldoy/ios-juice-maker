@@ -6,9 +6,6 @@
 
 import Foundation
 
-
-
-
 struct JuiceMaker {
 
 	enum JuiceMenu: String {

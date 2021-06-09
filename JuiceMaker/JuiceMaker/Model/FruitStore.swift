@@ -24,7 +24,7 @@ class FruitStore {
 				return currentFruit
 			}
 			set {
-				currentFruit = newValue
+				currentCount = currentFruit
 			}
 		}
 	}
