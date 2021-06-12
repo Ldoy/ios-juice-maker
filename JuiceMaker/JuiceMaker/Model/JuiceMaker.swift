@@ -45,55 +45,34 @@ struct JuiceMaker {
 			self.fruitStores.append(FruitStore(storeName: kinds))
 		}
 	}
+
+
+	func checkStore(receipe fruits: [(fruit: Fruit, amount: Int)], with stores: [FruitStore]) -> [FruitStore] {
+		let range = 0...fruits.count - 1
+		var checkedStores = [FruitStore]()
+		for i in range {
+			let fruitStore = stores.filter{ $0.name == fruits[i].fruit }
+			checkedStores += fruitStore
+		}
+		return checkedStores
+	}
 	
 	func compare(receipe fruits: [(fruit: Fruit, amount: Int)], with stores: [FruitStore]) -> Bool {
-		
-		let range = 0...stores.count - 1
-		let range2 = 0...fruits.count - 1
-		var result = false
+		let targetStores = checkStore(receipe: fruits, with: stores)
+		let range = 0...targetStores.count - 1
+		var result: Int = 0
 		
 		for i in range {
-			let fruitStoreName = stores[i].name
-			let fruitStoreStock = stores[i].count
-			
-			for a in range2 {
-				
-				let receipeFruit = fruits[a].fruit
-				let receipeFruitAmount = fruits[a].amount
-				
-				if fruitStoreName == receipeFruit {
-					let checkAmount = checkAmount(receipe: receipeFruitAmount, store: fruitStoreStock)
-					result = checkAmount
-				}
-				
-				if !result {
-					break
-				}
-			}
+			let possibleStore = fruits.filter{ $0.fruit == targetStores[i].name && $0.amount >= targetStores.count }.count
+			result += possibleStore
 		}
-		return result
-	}
-	
-	func checkAmount(receipe amount: Int, store stock: Int) -> Bool {
-		if amount > stock{
+		
+		if result != targetStores.count {
 			return false
 		}
+		
 		return true
 	}
-	
-	
-	func checkStore(receipe fruits: [(fruit: Fruit, amount: Int)], with stores: [FruitStore]) -> [FruitStore]{
-		let number = 0...fruits.count - 1
-		var b = [FruitStore]()
-		for i in number {
-			let a = stores.filter{ $0.name == fruits[i].fruit }
-			b += a
-		}
-		return b
-	}
-	
-	
-	
 }
 
 
