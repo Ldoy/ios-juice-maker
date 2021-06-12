@@ -22,15 +22,15 @@ enum JuiceMenu {
 		case .bananJuice:
 			return [(Fruit.banana, 2)]
 		case .kiwiJuice:
-			return [(Fruit.kiwi, 2)]
+			return [(Fruit.kiwi, 3)]
 		case .mangoJuice:
 			return [(Fruit.mango, 3)]
 		case .pineappleJuice:
-			return [(Fruit.pineapple, 4)]
+			return [(Fruit.pineapple, 2)]
 		case .strawNanaJuice:
-			return [(Fruit.strawberry, 2), (Fruit.banana, 3)]
+			return [(Fruit.strawberry, 10), (Fruit.banana, 1)]
 		case .mangoKiwiJuice:
-			return [(Fruit.kiwi, 2), (Fruit.banana, 3)]
+			return [(Fruit.mango, 2), (Fruit.kiwi, 1)]
 		}
 	}
 }
@@ -46,8 +46,7 @@ struct JuiceMaker {
 		}
 	}
 
-
-	func checkStore(receipe fruits: [(fruit: Fruit, amount: Int)], with stores: [FruitStore]) -> [FruitStore] {
+	func findTargetStore(receipe fruits: [(fruit: Fruit, amount: Int)], with stores: [FruitStore]) -> [FruitStore] {
 		let range = 0...fruits.count - 1
 		var checkedStores = [FruitStore]()
 		for i in range {
@@ -57,21 +56,35 @@ struct JuiceMaker {
 		return checkedStores
 	}
 	
-	func compare(receipe fruits: [(fruit: Fruit, amount: Int)], with stores: [FruitStore]) -> Bool {
-		let targetStores = checkStore(receipe: fruits, with: stores)
-		let range = 0...targetStores.count - 1
-		var result: Int = 0
+	func checkReceipeStoreStock(target store: [FruitStore], receipe fruits: [(fruit: Fruit, amount: Int)]) -> Bool{
+		
+		let targetStoreNumber = store.count - 1
+		let range = 0...targetStoreNumber
+		var result: [FruitStore]?
 		
 		for i in range {
-			let possibleStore = fruits.filter{ $0.fruit == targetStores[i].name && $0.amount >= targetStores.count }.count
-			result += possibleStore
+			let possibleStore = store.filter { $0.name == fruits[i].fruit && $0.count >= fruits[i].amount }
+			result? += possibleStore
 		}
 		
-		if result != targetStores.count {
+		guard result != nil, result?.count != store.count else {
 			return false
 		}
-		
 		return true
+	}
+
+	
+	func modifyStoreStock(_ possible: Bool) {
+		
+	}
+	
+	func checkJuicablity(receipe fruits: [(fruit: Fruit, amount: Int)], with stores: [FruitStore]) {
+		let targetStores = findTargetStore(receipe: fruits, with: stores)
+		let checkStock = checkReceipeStoreStock(target: targetStores, receipe: fruits)
+		
+		
+
+		
 	}
 }
 
