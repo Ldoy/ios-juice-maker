@@ -45,25 +45,18 @@ struct JuiceMaker {
 			self.fruitStores.append(FruitStore(storeName: kinds))
 		}
 	}
-
-	func findTargetStore(receipe fruits: [(fruit: Fruit, amount: Int)], with stores: [FruitStore]) -> [FruitStore] {
-		let range = 0...fruits.count - 1
-		var checkedStores = [FruitStore]()
-		for i in range {
-			let fruitStore = stores.filter{ $0.name == fruits[i].fruit }
-			checkedStores += fruitStore
-		}
-		return checkedStores
+	
+	
+	enum ErrorCase: Error {
+		case noStoreOrStock
 	}
 	
-	func checkReceipeStoreStock(target store: [FruitStore], receipe fruits: [(fruit: Fruit, amount: Int)]) -> Bool{
-		
-		let targetStoreNumber = store.count - 1
-		let range = 0...targetStoreNumber
+	
+	func checkReceipeStoreStock(receipe fruits: [(fruit: Fruit, amount: Int)], target store: [FruitStore]) -> Bool {
 		var result: [FruitStore]?
 		
-		for i in range {
-			let possibleStore = store.filter { $0.name == fruits[i].fruit && $0.count >= fruits[i].amount }
+		for receipe in fruits {
+			let possibleStore = store.filter { $0.name == receipe.fruit && $0.count >= receipe.amount }
 			result? += possibleStore
 		}
 		
@@ -72,19 +65,24 @@ struct JuiceMaker {
 		}
 		return true
 	}
-
 	
-	func modifyStoreStock(_ possible: Bool) {
+	func modifyStoreStock(receipe fruit: JuiceMenu, with stores: [FruitStore]) throws {
 		
-	}
-	
-	func checkJuicablity(receipe fruits: [(fruit: Fruit, amount: Int)], with stores: [FruitStore]) {
-		let targetStores = findTargetStore(receipe: fruits, with: stores)
-		let checkStock = checkReceipeStoreStock(target: targetStores, receipe: fruits)
+		let receipeFruitStore = fruit.recipe(fruit) // 레서피 프룻 스토어
+		let checkStock = checkReceipeStoreStock(receipe: receipeFruitStore, target: stores)
 		
+		guard checkStock else {
+			throw ErrorCase.noStoreOrStock
+		}
 		
-
-		
+		let range = 0...receipeFruitStore.count - 1
+		for fruit in range {
+			receipeFruitStore.filter{ (reciepe) in if reciepe.fruit == stores[fruit].name {
+				stores[fruit].modifyCount(-reciepe.amount)
+				}
+			return true
+			}
+		}
 	}
 }
 
