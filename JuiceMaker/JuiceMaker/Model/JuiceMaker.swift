@@ -51,6 +51,17 @@ struct JuiceMaker {
 		case noStoreOrStock
 	}
 	
+//	func checkStore(receipe needed: [(fruit: Fruit, amount: Int)], with stores: [FruitStore]) -> [FruitStore] {
+//
+//		var checkedStores = [FruitStore]()
+//
+//		for receipe in needed {
+//			let receipeNeededFruitStore = stores.filter{ $0.name == receipe.fruit }
+//			checkedStores += receipeNeededFruitStore
+//		}
+//		return checkedStores
+//	}
+//
 	
 	func checkReceipeStoreStock(receipe fruits: [(fruit: Fruit, amount: Int)], target store: [FruitStore]) throws -> Bool {
 		var result: [FruitStore]?
@@ -63,12 +74,15 @@ struct JuiceMaker {
 		guard result != nil, result?.count != store.count else {
 			throw ErrorCase.noStoreOrStock
 		}
+		
 		return true
 	}
 	
-	func modifyStoreStock(receipe fruit: JuiceMenu, with fruitStores: [FruitStore]) throws {
+	
+	func modifyStoreStock(compare menu: JuiceMenu, with fruitStores: [FruitStore]) throws {
 		
-		let receipeFruitStore = fruit.recipe(fruit) // 레서피 프룻 스토어
+		let receipeFruitStore = menu.recipe(menu)
+		
 		guard (try? checkReceipeStoreStock(receipe: receipeFruitStore, target: fruitStores)) == true else { throw ErrorCase.noStoreOrStock }
 		
 		let reciepeRange = 0...receipeFruitStore.count - 1
