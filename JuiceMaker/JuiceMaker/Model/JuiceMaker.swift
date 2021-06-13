@@ -45,7 +45,6 @@ enum Fruit: String, CaseIterable {
 
 struct JuiceMaker {
 
-	
 	var fruitStores =  [FruitStore]()
 	
 	init(){
@@ -54,38 +53,26 @@ struct JuiceMaker {
 		}
 	}
 	
-	func checkJuiceMakable(recipes: [(Fruit, Int)]) -> Bool {
-		var makable = true
+//	func checkJuiceMakable(recipes: [(Fruit, Int)]) -> Bool {
+//		var makable = true
+//
+//		for recipe in recipes {
+//			makable = checkFruitAmount(receipe: recipe)
+//			if !makable {
+//				return false
+//			}
+//		}
+//		return makable
+//	}
+	
+	func checkFruitAmount(receipe: (name: Fruit, amount: Int)) throws -> Bool {
 		
-		for recipe in recipes {
-			makable = checkFruitAmount(receipe: recipe)
-			if !makable {
-				return false
-			}
-		}
-		return makable
 	}
 	
-	func checkFruitAmount(receipe: (name: Fruit, amount: Int)) -> Bool {
-		guard let store = findFruitStore(name: receipe.name) else {
-			return false
-		}
-		if store.stock >= receipe.amount {
-			return true
-		} else {
-			return false
-		}
-	}
-	
-	func findFruitStore(name: Fruit) -> FruitStore? {
-		var targetStore: FruitStore?
+	func findFruitStore(name: Fruit) throws -> [FruitStore] {
 		
-		for store in fruitStores {
-			if store.name == name.rawValue {
-				targetStore = store
-				break
-			}
-		}
+		let targetStore = fruitStores.filter{ $0.name == name }
+		
 		return targetStore
 	}
 }
