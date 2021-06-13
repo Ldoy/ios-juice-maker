@@ -51,49 +51,36 @@ struct JuiceMaker {
 		case noStoreOrStock
 	}
 	
-//	func checkStore(receipe needed: [(fruit: Fruit, amount: Int)], with stores: [FruitStore]) -> [FruitStore] {
-//
-//		var checkedStores = [FruitStore]()
-//
-//		for receipe in needed {
-//			let receipeNeededFruitStore = stores.filter{ $0.name == receipe.fruit }
-//			checkedStores += receipeNeededFruitStore
-//		}
-//		return checkedStores
-//	}
-//
-	
-	func checkReceipeStoreStock(receipe fruits: [(fruit: Fruit, amount: Int)], target store: [FruitStore]) throws -> Bool {
+	func checkReceipeStoreStock(_ receipes: [(fruit: Fruit, amount: Int)]) throws -> Bool {
 		var result: [FruitStore]?
 		
-		for receipe in fruits {
-			let possibleStore = store.filter { $0.name == receipe.fruit && $0.count >= receipe.amount }
+		for receipe in receipes {
+			let possibleStore = fruitStores.filter { $0.name == receipe.fruit && $0.count >= receipe.amount }
 			result? += possibleStore
 		}
 		
-		guard result != nil, result?.count != store.count else {
+		guard result != nil, result?.count == receipes.count else {
 			throw ErrorCase.noStoreOrStock
 		}
 		
 		return true
 	}
-	
-	
+	@discardableResult
 	func modifyStoreStock(compare menu: JuiceMenu, with fruitStores: [FruitStore]) throws {
 		
-		let receipeFruitStore = menu.recipe(menu)
+		let receipeNeeded = menu.recipe(menu)
 		
-		guard (try? checkReceipeStoreStock(receipe: receipeFruitStore, target: fruitStores)) == true else { throw ErrorCase.noStoreOrStock }
+		guard (try? checkReceipeStoreStock(receipeNeeded)) == true else { throw ErrorCase.noStoreOrStock }
 		
-		let reciepeRange = 0...receipeFruitStore.count - 1
-		for fruit in reciepeRange {
-			let _ = receipeFruitStore.filter{ (reciepe) in if reciepe.fruit == fruitStores[fruit].name {
-				fruitStores[fruit].modifyCount(-reciepe.amount)
-				}
-			return true
+		let reciepeRange = 0..<fruitStores.count
+		
+		for i in reciepeRange {
+			_ = receipeNeeded.filter{ (reciepe) in if reciepe.fruit == fruitStores[i].name {
+				fruitStores[i].modifyCount(-reciepe.amount)
+				return true
 			}
+			return false
 		}
 	}
+	}
 }
-
-
