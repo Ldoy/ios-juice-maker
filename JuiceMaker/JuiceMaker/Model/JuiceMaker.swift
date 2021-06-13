@@ -35,6 +35,13 @@ enum JuiceMenu {
 	}
 }
 
+
+enum ErrorCase: Error {
+	case noStoreOrStock
+	case storeStockShortage
+}
+
+
 struct JuiceMaker {
 	
 	var fruitStores: [FruitStore]
@@ -45,12 +52,7 @@ struct JuiceMaker {
 			self.fruitStores.append(FruitStore(storeName: kinds))
 		}
 	}
-	
-	
-	enum ErrorCase: Error {
-		case noStoreOrStock
-	}
-	
+
 	func checkReceipeStoreStock(_ receipes: [(fruit: Fruit, amount: Int)]) throws -> Bool {
 		var result: [FruitStore]?
 		

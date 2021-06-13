@@ -24,7 +24,14 @@ class FruitStore {
 		self.name = storeName
 	}
 	
-	func modifyCount(_ number: Int) {
+	func modifyCount(_ number: Int) throws {
+	
+		
+		guard count >= 0 else {
+			throw ErrorCase.storeStockShortage
+		}
+		
+		
 		var modifiedCount: Int {
 			get {
 				count += number
@@ -34,5 +41,6 @@ class FruitStore {
 				count += number
 			}
 		}
+		
 	}
 }
