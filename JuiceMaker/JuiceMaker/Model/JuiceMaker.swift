@@ -65,7 +65,7 @@ struct JuiceMaker {
 		
 		return true
 	}
-	@discardableResult
+
 	func modifyStoreStock(compare menu: JuiceMenu, with fruitStores: [FruitStore]) throws {
 		
 		let receipeNeeded = menu.recipe(menu)
