@@ -35,7 +35,8 @@ class ViewController: UIViewController {
     }
     
     var completeAlert: UIAlertController {
-        let alert = UIAlertController(title: "확인", message: "***쥬스가 나왔습니다! 맛있게 드세요!", preferredStyle: .alert)
+		
+		let alert = UIAlertController(title: "확인", message: "message", preferredStyle: .alert)
 
         alert.addAction(
             UIAlertAction(
@@ -57,6 +58,7 @@ class ViewController: UIViewController {
         changeStrawberryStockUILabel()
 	}
 	
+
 	@IBOutlet weak var strawberryStockLabel: UILabel!
 	@IBOutlet weak var bananaStockLabel: UILabel!
 	@IBOutlet weak var pineappleStockLabel: UILabel!
@@ -77,6 +79,8 @@ class ViewController: UIViewController {
             self.present(stockAlert, animated: false, completion: nil)
         }
     }
+	
+	
     
     @IBAction func makeStrawberryJuice(_ sender: UIButton) {
         do {
@@ -186,3 +190,4 @@ class ViewController: UIViewController {
         }
     }
 }
+
