@@ -14,10 +14,11 @@ class FruitStore {
             return count
         }
     }
+	
     let name: Fruit
     
     init(storeName: Fruit){
-        name = storeName
+		self.name = storeName
     }
     
     func setStock(amount number: Int){

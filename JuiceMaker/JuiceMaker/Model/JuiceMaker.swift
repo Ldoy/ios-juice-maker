@@ -49,7 +49,7 @@ struct JuiceMaker {
         case lackOfStock
     }
 	
-	private var fruitStores =  [FruitStore]()
+	var fruitStores =  [FruitStore]()
 	
 	init(){
 		for fruit in Fruit.allCases {
