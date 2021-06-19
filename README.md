@@ -8,4 +8,4 @@ MVC패턴, KVO, Notification Center, Singleton, 캡슐화/은닉화, 결합력/�
 그러한 경우에는 재고수정 화면으로 진입 해 재고량을 수정하게 됩니다. 혹은 과일 쥬스 버튼을 클릭한 후 재고가 수정되지 않았다는 알람을 통해 재고 수정 화면으로 들어갈 수 있습니다. 
 
 ### 흐름도
-![image](./Flowchart.png)
+![image](ios-juice-maker/Flowchart.png)
