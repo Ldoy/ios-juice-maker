@@ -19,5 +19,7 @@ MVC패턴, KVO, Notification Center, Singleton, 캡슐화/은닉화, 결합력/�
 5. KVO
 6. Notification Center 
 
+다음과 같은 개념을 알아야 한다느 것을 알았다. 차차 해당 개념을 정리하고 적용하는 시간을 가져야겠다. 
+
 참고 자료 : 
 https://i-colours-u.tistory.com/6
