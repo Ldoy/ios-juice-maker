@@ -5,24 +5,38 @@
 //
 
 import Foundation
+// 싱글턴으로 구현하기.
 
 class FruitStore {
-	private var count = 10
+	
+	enum FruitKinds: CaseIterable {
+		case strawberry
+		case banana
+		case mango
+		case kiwi
+		case pineapple
+	}
+	
+	static let shared: FruitStore = FruitStore.init()
+	
+	private init() {
+	}
+	
+	let name: FruitKinds
+	
+	init(name: FruitKinds) {
+		self.name = name
+	}
+	
+	private var count: Int = 10
 	
 	var stock: Int {
-		get {
-			return count
-		}
+		return count
 	}
 	
-	let name: Fruit
-	
-	init(storeName: Fruit){
-		self.name = storeName
-	}
-	
-	func setStock(amount number: Int){
-		count += number
+	func setStockCount(quntity: Int) {
+		return count += quntity
 	}
 }
+
 
